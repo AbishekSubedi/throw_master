@@ -1,0 +1,19 @@
+# MacOS system files
+.DS_Store
+
+# Python Compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Python env
+global_python_env/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Pygame cache
+*.wav.cache
+*.ogg.cache
