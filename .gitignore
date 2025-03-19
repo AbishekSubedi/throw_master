@@ -8,7 +8,7 @@ __pycache__/
 *.pyd
 
 # Python env
-global_python_env/
+venv/
 
 # Logs and temporary files
 *.log
