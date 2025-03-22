@@ -1,58 +1,65 @@
-'''Javeline Throwing Game Made from Pygame'''
+'''
+main.py
 
+This is the main entry point for the Throw Master game.
+
+Responsibilities:
+- Initializes Pygame and the game window.
+- Loads assets (images and icons) from the assets module.
+- Manages the game loop, including player input, drawing, and screen updates.
+'''
+
+import sys
 import pygame
+from config import *
+from assets import load_assets
+from draw_img import draw_bg, draw_ground, draw_player
 
 pygame.init()
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-
-background = pygame.image.load("assets/background.jpg")
-background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 gameDisplay = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-player_img = pygame.image.load("assets/player.png")
-
-icon_img = pygame.image.load("assets/javelin-throw.png")
-
 pygame.display.set_caption("Throw Master")
-pygame.display.set_icon(icon_img)
+clock = pygame.time.Clock()
 
-PLAYER_X = 30
-PLAYER_Y = 380
-PLAYER_X_CHNAGE = 0
-player_rect = player_img.get_rect(topleft=(PLAYER_X, PLAYER_Y))
+bg_images, ground_img, player_img = load_assets()
+bg_width = bg_images[0].get_width()
+ground_width = ground_img.get_width()
+ground_height = ground_img.get_height()
 
-RUNNING = True
+def main():
+    """
+    The main loop of the game.
 
-def player(x: int, y: int) -> None:
-    gameDisplay.blit(player_img, (x, y))
+    Continuously handles:
+    - Timing via FPS control.
+    - Drawing background, ground, and player layers.
+    - Scrolling the screen based on user key inputs.
+    - Handling quit events.
+    """
+    scroll = 0
+    running = True
 
-while RUNNING:
+    while running:
+        clock.tick(FPS)
 
-    gameDisplay.blit(background, (0, 0))
+        # Draw
+        draw_bg(gameDisplay, bg_images, scroll, bg_width)
+        draw_ground(gameDisplay, ground_img, scroll, ground_width, ground_height, SCREEN_HEIGHT)
+        draw_player(gameDisplay, player_img, PLAYER_X, PLAYER_Y)
+        pygame.display.update()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            RUNNING = False
-        
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                PLAYER_X_CHNAGE = -1
-            elif event.key == pygame.K_RIGHT:
-                PLAYER_X_CHNAGE = 1
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                PLAYER_X_CHNAGE = 0
+        # Input Handling
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT] and scroll > 0:
+            scroll -= SCROLL_SPEED
+        elif key[pygame.K_RIGHT] and scroll < MAX_SCROLL:
+            scroll += SCROLL_SPEED
 
-    player_rect.x += PLAYER_X_CHNAGE
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-    if player_rect.x <= 0:
-        player_rect.x = 0
-    elif player_rect.x >= SCREEN_WIDTH - player_rect.width:
-        player_rect.x = SCREEN_WIDTH - player_rect.width
+    pygame.quit()
+    sys.exit()
 
-    player(player_rect.x, player_rect.y)
-
-    pygame.display.update()
-
-pygame.quit()
+if __name__ == "__main__":
+    main()
