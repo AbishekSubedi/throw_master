@@ -13,14 +13,14 @@ import sys
 import pygame
 from config import *
 from assets import load_assets
-from draw_img import draw_bg, draw_ground, draw_player
+from draw_img import draw_bg, draw_ground, draw_player, draw_spear
 
 pygame.init()
 gameDisplay = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Throw Master")
 clock = pygame.time.Clock()
 
-bg_images, ground_img, player_img = load_assets()
+bg_images, ground_img, player_img, spear_img = load_assets()
 bg_width = bg_images[0].get_width()
 ground_width = ground_img.get_width()
 ground_height = ground_img.get_height()
@@ -45,6 +45,7 @@ def main():
         draw_bg(gameDisplay, bg_images, scroll, bg_width)
         draw_ground(gameDisplay, ground_img, scroll, ground_width, ground_height, SCREEN_HEIGHT)
         draw_player(gameDisplay, player_img, PLAYER_X, PLAYER_Y)
+        draw_spear(gameDisplay, spear_img, SPEAR_X, SPEAR_Y)
         pygame.display.update()
 
         # Input Handling

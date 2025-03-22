@@ -22,5 +22,8 @@ def load_assets() -> tuple:
     ground_img = pygame.image.load("assets/ground.png").convert_alpha()
     player_img = pygame.image.load("assets/player.png")
     icon_img = pygame.image.load("assets/javelin-throw.png")
+    spear_img = pygame.image.load("assets/spear.png")
+    spear_img = pygame.transform.scale(spear_img, (100, 80))
+    spear_img = pygame.transform.rotate(spear_img, -16) # 164)
     pygame.display.set_icon(icon_img)
-    return bg_images, ground_img, player_img
+    return bg_images, ground_img, player_img, spear_img

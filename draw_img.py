@@ -48,3 +48,16 @@ def draw_player(display, player_img, x: int, y: int) -> None:
         y (int): The vertical position of the player.
     """
     display.blit(player_img, (x, y))
+
+
+def draw_spear(display, spear_img, spear_x: int, spear_y: int) -> None:
+    """
+    Draws the spear at the specified coordinates.
+
+    Parameters:
+        display (Surface): The main game display surface.
+        spear_img (Surface): The spear image to render.
+        x (int): The horizontal position of the spear.
+        y (int): The vertical position of the spear.
+    """
+    display.blit(spear_img, (spear_x, spear_y))
